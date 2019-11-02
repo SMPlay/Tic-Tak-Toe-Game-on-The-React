@@ -19,29 +19,55 @@ class InputField extends Component {
     }
     
     handleSelect(){
-        this.props.selectSize(this.state.value);
-    }
+        let size = Number(this.state.value);
+        if (size > 0){
+            
+            let cellArr = [];
+            for (let i = 0; i < Number(this.state.value); i++){
+                let firstCoord = `${i + 1}`;
+                for (let j = 0; j < Number(this.state.value); j++){
+                    let twoCoord = `${j + 1}`;
+                    let cellObj = {
+                        content: null,
+                        coordinates: `${firstCoord}.${twoCoord}`,
+                    };
+                    cellArr = [...cellArr, cellObj];
+                };
+            };
+            cellArr = cellArr.map((item, i) => {
+                return {...item, id: i};
+            });
+            this.props.selectNumberOfCells(cellArr, Number(this.state.value));
+
+            this.setState({
+                value: ''
+            });
+        }else {
+            alert('Введите число больше 0!');
+        }
+    };
 
     handleChange(e){
+        let value = e.target.value;
         this.setState({
-            value: e.target.value,
+            value: value
         });
-    }
+    };
 
     render(){
         return(
             <div className='input-field'>
-                <h3>Выберите площадь:</h3>
-                <input value={ this.state.value } onChange={ this.handleChange }/>
+                <h3>Выберите размер:</h3>
+                <input type='number' value={ this.state.value } onChange={ this.handleChange }/>
                 <button onClick={ this.handleSelect }>Select!</button>
             </div>
         );
-    }
+    };
 };
 
 const mapDispatchToProps = dispatch => (
     {
-        selectSize: valueSize => dispatch(actions.selectSize(valueSize))
+        selectNumberOfCells: (cellArr, size) => dispatch(actions.selectNumberOfCells(cellArr, size))
     }
 )
 

@@ -1,7 +1,5 @@
 .tic-tac-toe-field {
     display: flex;
     flex-wrap:wrap;
-    border: 2px solid black;
-    width: 462px;
-    height: 462px;
+    height: auto;
 }
