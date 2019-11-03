@@ -4,7 +4,8 @@ const initialState = {
     icon: 'X',
     cellArr: null,
     size: null,
-    count: 0
+    count: 0,
+    win: false
 };
 
 const reducer = (state = initialState, action) => {
@@ -26,12 +27,18 @@ const reducer = (state = initialState, action) => {
                 cellArr: action.payload.updateCellArr,
                 count: action.payload.count
             }
+        case actionTypes.WIN:
+            return {
+                ...state,
+                win: true
+            }
         case actionTypes.RESTART:
             return {
                 icon: 'X',
-                cellArr: null,
+                cellArr: [],
                 size: null,
-                count: 0
+                count: 0,
+                win: false,
             }
         default:
             return state;

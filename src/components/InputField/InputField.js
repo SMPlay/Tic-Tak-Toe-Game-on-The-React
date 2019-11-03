@@ -20,7 +20,7 @@ class InputField extends Component {
     
     handleSelect(){
         let size = Number(this.state.value);
-        if (size > 0){
+        if (size > 1){
             
             let cellArr = [];
             for (let i = 0; i < Number(this.state.value); i++){

@@ -24,6 +24,12 @@ export const updateCellAndCount = (updateCellArr, count) => (
     }
 )
 
+export const win = () => (
+    {
+        type: actionTypes.WIN,
+    }
+)
+
 export const restartGame = () => (
     {
         type: actionTypes.RESTART,
