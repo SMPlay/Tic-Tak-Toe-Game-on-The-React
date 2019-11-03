@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
     icon: 'X',
-    cellArr: null,
+    cellArr: [],
     size: null,
     count: 0,
     win: false

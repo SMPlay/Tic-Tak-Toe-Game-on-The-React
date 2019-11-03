@@ -43,7 +43,7 @@ class InputField extends Component {
                 value: ''
             });
         }else {
-            alert('Введите число больше 0!');
+            alert('Введите число больше 1!');
         }
     };
 
