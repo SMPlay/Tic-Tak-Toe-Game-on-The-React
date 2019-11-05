@@ -5,7 +5,7 @@ const initialState = {
     cellArr: [],
     size: null,
     count: 0,
-    win: false
+    win: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -30,7 +30,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.WIN:
             return {
                 ...state,
-                win: true
+                win: true,
             }
         case actionTypes.RESTART:
             return {

@@ -1,7 +1,3 @@
-.queue-field {
-    display: flex;
-}
-
 .queue-field__cell {
     display: flex;
     justify-content: center;

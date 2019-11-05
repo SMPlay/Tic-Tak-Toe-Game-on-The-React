@@ -1,32 +1,38 @@
 import React from 'react';
 
-import Cross from '../../components/Cross/Cross';
-import Zero from '../../components/Zero/Zero';
+import Figure from '../../components/Figure/Figure';
 
 import './style.css';
 
 import { connect } from 'react-redux';
 
-const QueueField = (props) => {
+const QueueField = props => {
     return(
-        <div className='queue-field'>
+        <div className='queue-field' style={ {display: props.size === null ? 'none' : 'flex'} }>
             <div className='queue-field__cell' 
                 style={{border: `3px solid ${props.icon === 'X' ? 'green' : 'red'}`}}>
-                <Cross/>
+                <Figure 
+                    figureName={ "fas fa-times" } 
+                    fontSize={ 10 }/>
             </div>
             <div className='queue-field__cell'
                 style={{
                     border: `3px solid ${props.icon === 'O' ? 'green' : 'red'}`,
                     marginLeft: '2px'
                     }}>
-                <Zero/>
+                    <Figure 
+                        figureName={ "far fa-circle" }
+                        fontSize={ 8 }/>
             </div>
         </div>
     );
 };
 
 const mapStateToProps = state => (
-    {icon: state.icon,}
+    {
+        icon: state.icon,
+        size: state.size
+    }
 )
 
-export default connect(mapStateToProps)(QueueField) ;
+export default connect(mapStateToProps)(QueueField);

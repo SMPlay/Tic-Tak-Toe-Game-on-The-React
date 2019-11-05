@@ -28,6 +28,7 @@ class InputField extends Component {
                 for (let j = 0; j < Number(this.state.value); j++){
                     let twoCoord = `${j + 1}`;
                     let cellObj = {
+                        color: 'black',
                         content: null,
                         coordinates: `${firstCoord}.${twoCoord}`,
                     };
@@ -57,7 +58,7 @@ class InputField extends Component {
     render(){
         return(
             <div className='input-field'>
-                <h3>Выберите размер:</h3>
+                <h3>Выберите размер поля:</h3>
                 <input type='number' value={ this.state.value } onChange={ this.handleChange }/>
                 <button onClick={ this.handleSelect }>Select!</button>
             </div>
