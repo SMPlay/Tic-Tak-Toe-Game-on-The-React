@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Figure from '../Figure/Figure';
+import * as styled from '../../styled/style';
 import './style.css';
 
 import * as actions from '../../store/actions/actions';
@@ -24,16 +25,21 @@ const Cell = props => {
         };
     };
 
+    const getSizeIcon = sizeIcon => {
+        let fontSize = props.sizeCell * sizeIcon / styled.defaultCellSize;
+        return fontSize;
+    } 
+
     let content = '';
     if (props.content === 'X'){
         content = <Figure 
                         figureName={ "fas fa-times" } 
-                        fontSize={ 10 }
+                        fontSize={ getSizeIcon(10) }
                         color={ props.color }/>;
     }else if(props.content === 'O'){
         content = <Figure 
                         figureName={ "far fa-circle" }
-                        fontSize={ 8 }
+                        fontSize={ getSizeIcon(8) }
                         color={ props.color }/>;
     }else{
         content = '';
@@ -42,17 +48,20 @@ const Cell = props => {
     return (
         <div 
             className='cell'
+            style={ {width: `${props.sizeCell}px`,
+                    height: `${props.sizeCell}px`,
+                    border: `${styled.borderCell}px solid black`} }
             data-id={props.dataId}
-            onClick={!props.win ? e => handleClick(e) : null}>{content}</div>
+            onClick={!props.win ? e => handleClick(e) : null}>{ content }</div>
     );
 };
 
-const mapStateToProps =( { cellArr, count, icon, leader } ) => (
+const mapStateToProps = state => (
     {
-        cell: cellArr,
-        count: count,
-        icon: icon,
-        leader: leader
+        cell: state.cellArr,
+        count: state.count,
+        icon: state.icon,
+        sizeCell: state.sizeCell,
     }
 );
 
@@ -61,6 +70,6 @@ const mapDispatchToProps = dispatch => (
         updateCellAndCount: (updateCellArr, count) => dispatch(actions.updateCellAndCount(updateCellArr, count)),
         moveDone: () => dispatch(actions.selectCell()) 
     }
-)
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cell);

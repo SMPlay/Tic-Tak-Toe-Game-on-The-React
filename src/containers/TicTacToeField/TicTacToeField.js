@@ -11,7 +11,7 @@ class TicTacToeField extends Component {
 
     componentDidUpdate(){
         if(!this.props.win){
-            if(this.props.count > this.props.size){
+            if(this.props.count > this.props.sizeField){
                 const winDetail = leaderArr => {
                     leaderArr = leaderArr.map(item => item.color = 'green');
                     this.props.winGame();
@@ -24,11 +24,11 @@ class TicTacToeField extends Component {
                             
                     let strX = '';
                     let strO = '';
-                    for(let i = 0; i < this.props.size; i++){
+                    for(let i = 0; i < this.props.sizeField; i++){
                         strX += 'X';
                         strO += 'O';
                     }
-                            
+                    
                     if(symbolStr === strX){
                         winDetail(arr);
                     }else if(symbolStr === strO){
@@ -37,7 +37,7 @@ class TicTacToeField extends Component {
                 };
             
                 let rightDiag = [];
-                for(let i = 1; i < this.props.size + 1; i++){
+                for(let i = 1; i < this.props.sizeField + 1; i++){
                     const strFields = this.props.cellArr.filter(item => {
                         return item.coordinates.slice(0, 1) === `${i}`;
                     });
@@ -61,28 +61,27 @@ class TicTacToeField extends Component {
                 win(rightDiag);
             };
 
-            if(this.props.count === (this.props.size ** 2) && this.props.win){
+            if(this.props.count === (this.props.sizeField ** 2) && this.props.win){
                 setTimeout(() => {
                     alert('Ничья!');
                 }, 300);
             };
         };
-        
     };
+
     render(){
         if(this.props.cellArr !== null){
-            const sizeField = this.props.size;
             return(
                 <div 
                     className='tic-tac-toe-field' 
-                    style={ {width: `${sizeField * 154}px`} }>
+                    style={ {width: `${this.props.sizeField * (this.props.sizeCell + 4)}px`} }>
                     {this.props.cellArr.map((item, i) => (
                         <Cell 
-                        key={ i }
-                        color={ item.color } 
-                        win={ this.props.win }
-                        dataId={ item.id }
-                        content={ item.content }
+                            key={ i }
+                            color={ item.color } 
+                            win={ this.props.win }
+                            dataId={ item.id }
+                            content={ item.content }
                         />))}
                 </div>
             );
@@ -98,7 +97,8 @@ const mapStateToProps = state => (
     {
         icon: state.icon,
         cellArr: state.cellArr,
-        size: state.size,
+        sizeField: state.sizeField,
+        sizeCell: state.sizeCell,
         count: state.count,
         win: state.win
     }

@@ -1,9 +1,11 @@
 import * as actionTypes from '../actions/actionTypes';
+import * as styled from '../../styled/style';
 
 const initialState = {
     icon: 'X',
     cellArr: [],
-    size: null,
+    sizeField: null,
+    sizeCell: styled.defaultCellSize,
     count: 0,
     win: false,
 };
@@ -19,7 +21,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 cellArr: action.payload.cellArr,
-                size: action.payload.size
+                sizeField: action.payload.sizeField,
+                sizeCell: action.payload.sizeCell
             };
         case actionTypes.UPDATE_CELL_AND_COUNT:
             return {
@@ -36,7 +39,8 @@ const reducer = (state = initialState, action) => {
             return {
                 icon: 'X',
                 cellArr: [],
-                size: null,
+                sizeField: null,
+                sizeCell: styled.defaultCellSize,
                 count: 0,
                 win: false,
             }

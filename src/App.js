@@ -10,9 +10,10 @@ import RestartBtn from './components/RestartBtn/RestartBtn';
 import './App.css';
 
 const App = props => {
+  let restartBtn = null;
   if(props.cellArr.length > 1){
-    if(props.win || (props.count === (props.size ** 2) && !props.win)){
-      var restartBtn = <RestartBtn/>;
+    if(props.win || (props.count === (props.sizeField ** 2) && !props.win)){
+      restartBtn = <RestartBtn/>;
     };
   };
   return(
@@ -32,7 +33,7 @@ const mapStateToProps = state => (
     count: state.count,
     win: state.win,
     cellArr: state.cellArr,
-    size: state.size
+    sizeField: state.sizeField
   }
 );
 

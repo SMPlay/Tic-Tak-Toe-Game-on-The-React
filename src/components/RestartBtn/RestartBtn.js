@@ -8,8 +8,8 @@ import * as actions from '../../store/actions/actions';
 
 const RestartBtn = props => {
     return(
-        <div>
-            <button onClick={ props.restartGame }>Restart Game</button>
+        <div className='restart'>
+            <button className='restart__btn' onClick={ props.restartGame }>Restart Game</button>
         </div>
     );
 };

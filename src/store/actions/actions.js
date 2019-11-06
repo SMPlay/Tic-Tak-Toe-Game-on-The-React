@@ -4,12 +4,13 @@ export const selectCell = () => (
     {type: actionTypes.MOVE_DONE}
 );
 
-export const selectNumberOfCells =(cellArr, size) => (
+export const selectNumberOfCells =(cellArr, sizeField, sizeCell) => (
     {
         type: actionTypes.SELECT_NUMBER_OF_CELLS,
         payload: {
             cellArr: cellArr,
-            size: size
+            sizeField: sizeField,
+            sizeCell: sizeCell
         }
     }
 );
