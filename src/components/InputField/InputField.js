@@ -26,8 +26,8 @@ class InputField extends Component {
             const clientWidth = document.documentElement.clientWidth;
             if (size > 20){
                 alert('Введите число меньше 20!');            
-            }else if(size <= 1){
-                alert('Введите число больше 1!');
+            }else if(size <= 2){
+                alert('Введите число больше 2!');
             }else {
                 let cellArr = [];
 
@@ -90,8 +90,9 @@ class InputField extends Component {
     };
 };
 
-const mapStateToProps = ({ sizeCell }) => (
-    {sizeCell: sizeCell}
+
+const mapStateToProps = state => (
+    {sizeCell: state.reducerMainGame.sizeCell}
 )
 
 const mapDispatchToProps = dispatch => (

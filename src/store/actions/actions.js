@@ -25,14 +25,20 @@ export const updateCellAndCount = (updateCellArr, count) => (
     }
 )
 
-export const win = () => (
+export const win = leader => (
     {
         type: actionTypes.WIN,
+        leader: leader
     }
 )
 
 export const restartGame = () => (
+    {type: actionTypes.RESTART,}
+);
+
+export const selectPlayer = player => (
     {
-        type: actionTypes.RESTART,
+        type: actionTypes.SELECT_PLAYER,
+        player: player
     }
-)
+);

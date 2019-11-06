@@ -30,8 +30,8 @@ const QueueField = props => {
 
 const mapStateToProps = state => (
     {
-        icon: state.icon,
-        size: state.size
+        icon: state.reducerMainGame.icon,
+        size: state.reducerMainGame.size
     }
 )
 

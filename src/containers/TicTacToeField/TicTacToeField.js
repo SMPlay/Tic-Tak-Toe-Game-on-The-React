@@ -12,9 +12,11 @@ class TicTacToeField extends Component {
     componentDidUpdate(){
         if(!this.props.win){
             if(this.props.count > this.props.sizeField){
-                const winDetail = leaderArr => {
+                const winDetail = (leaderArr, leaderIcon) => {
                     leaderArr = leaderArr.map(item => item.color = 'green');
-                    this.props.winGame();
+                    let leader = this.props.players.find(item => item.playerIcon === leaderIcon);
+                    leader.winCount += 1;
+                    this.props.winGame(leader.name);
                 };
 
                 const win = arr => {
@@ -30,9 +32,9 @@ class TicTacToeField extends Component {
                     }
                     
                     if(symbolStr === strX){
-                        winDetail(arr);
+                        winDetail(arr, 'X');
                     }else if(symbolStr === strO){
-                        winDetail(arr);
+                        winDetail(arr, 'O');
                     };         
                 };
             
@@ -46,7 +48,7 @@ class TicTacToeField extends Component {
                     });
 
                     this.props.cellArr.forEach(item => {
-                        if(item.coordinates.slice(0, 1) === `${i}` && item.coordinates.slice(-1) === `${this.props.size + 1 - i}`){
+                        if(item.coordinates.slice(0, 1) === `${i}` && item.coordinates.slice(-1) === `${this.props.sizeField + 1 - i}`){
                             rightDiag.push(item);
                         };   
                     });
@@ -59,12 +61,6 @@ class TicTacToeField extends Component {
                 });
                 win(leftDiag);
                 win(rightDiag);
-            };
-
-            if(this.props.count === (this.props.sizeField ** 2) && this.props.win){
-                setTimeout(() => {
-                    alert('Ничья!');
-                }, 300);
             };
         };
     };
@@ -95,12 +91,13 @@ class TicTacToeField extends Component {
 
 const mapStateToProps = state => (
     {
-        icon: state.icon,
-        cellArr: state.cellArr,
-        sizeField: state.sizeField,
-        sizeCell: state.sizeCell,
-        count: state.count,
-        win: state.win
+        icon: state.reducerMainGame.icon,
+        cellArr: state.reducerMainGame.cellArr,
+        sizeField: state.reducerMainGame.sizeField,
+        sizeCell: state.reducerMainGame.sizeCell,
+        count: state.reducerMainGame.count,
+        win: state.reducerMainGame.win,
+        players: state.reducerPlayers.players
     }
 );
 
@@ -108,7 +105,8 @@ const mapDispatchToProps = dispatch => (
     {
         moveDone: () => dispatch(actions.selectCell()),
         restartGame: () => dispatch(actions.restartGame()),
-        winGame: () => dispatch(actions.win()),
+        winGame: leader => dispatch(actions.win(leader)),
+
     }
 )
 

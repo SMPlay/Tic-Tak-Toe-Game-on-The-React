@@ -7,10 +7,11 @@ const initialState = {
     sizeField: null,
     sizeCell: styled.defaultCellSize,
     count: 0,
+    leader: null,
     win: false,
 };
 
-const reducer = (state = initialState, action) => {
+const reducerMainGame = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.MOVE_DONE:
             return {
@@ -33,6 +34,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.WIN:
             return {
                 ...state,
+                leader: action.leader,
                 win: true,
             }
         case actionTypes.RESTART:
@@ -42,6 +44,7 @@ const reducer = (state = initialState, action) => {
                 sizeField: null,
                 sizeCell: styled.defaultCellSize,
                 count: 0,
+                leader: null,
                 win: false,
             }
         default:
@@ -49,4 +52,4 @@ const reducer = (state = initialState, action) => {
     };
 };
 
-export default reducer;
+export default reducerMainGame;

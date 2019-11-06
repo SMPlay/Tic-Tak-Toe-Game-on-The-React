@@ -58,10 +58,10 @@ const Cell = props => {
 
 const mapStateToProps = state => (
     {
-        cell: state.cellArr,
-        count: state.count,
-        icon: state.icon,
-        sizeCell: state.sizeCell,
+        cell: state.reducerMainGame.cellArr,
+        count: state.reducerMainGame.count,
+        icon: state.reducerMainGame.icon,
+        sizeCell: state.reducerMainGame.sizeCell,
     }
 );
 
