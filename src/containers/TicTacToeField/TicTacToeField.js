@@ -59,12 +59,7 @@ const mapStateToProps = state => (
 );
 
 const mapDispatchToProps = dispatch => (
-    {
-        moveDone: () => dispatch(actions.selectCell()),
-        restartGame: () => dispatch(actions.restartGame()),
-        winGame: leader => dispatch(actions.win(leader)),
-
-    }
-)
+    {winGame: leader => dispatch(actions.win(leader)),}
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(TicTacToeField);
