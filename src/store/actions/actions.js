@@ -4,7 +4,7 @@ export const selectCell = () => (
     {type: actionTypes.MOVE_DONE}
 );
 
-export const selectNumberOfCells =(cellArr, sizeField, sizeCell) => (
+export const selectNumberOfCells = (cellArr, sizeField, sizeCell) => (
     {
         type: actionTypes.SELECT_NUMBER_OF_CELLS,
         payload: {
@@ -36,9 +36,18 @@ export const restartGame = () => (
     {type: actionTypes.RESTART,}
 );
 
+export const err = err => (
+    {
+        type: actionTypes.ERR,
+        err: err
+    }
+)
+
 export const selectPlayer = player => (
     {
         type: actionTypes.SELECT_PLAYER,
-        player: player
+        payload: {
+            player: player,
+        }
     }
 );

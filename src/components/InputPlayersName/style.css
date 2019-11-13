@@ -13,8 +13,8 @@
 .players-form h3 {
     display: flex;
     justify-content: space-around;
-    width: 260px;
-    font-size: 1.4em;
+    width: 300px;
+    font-size: 1.27em;
     font-weight: 600;
 }
 
@@ -53,6 +53,10 @@
 
 .players-form__btn:active {
     background-color: rgb(34, 22, 209);
+}
+
+.circle-picker {
+    margin-top: 12px;
 }
 
 .errors {

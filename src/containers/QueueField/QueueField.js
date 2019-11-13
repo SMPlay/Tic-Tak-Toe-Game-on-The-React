@@ -2,9 +2,9 @@ import React from 'react';
 
 import Figure from '../../components/Figure/Figure';
 
-import './style.css';
-
 import { connect } from 'react-redux';
+
+import './style.css';
 
 const QueueField = props => {
     return(

@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 
-import * as actions from '../../store/actions/actions';
 import { connect } from 'react-redux';
+import { CirclePicker } from 'react-color';
+import * as actions from '../../store/actions/actions';
 
-import Figure from '../Figure/Figure';
+import getPlayerObj from './util/getPlayerObj';
+import CurentPlayerComponent from './util/CurentPlayerComponent';
 
 import './style.css';
 
@@ -13,50 +15,36 @@ class InputPlayersName extends Component {
         super(props);
 
         this.state = {
-            idPlayer: 0,
-            currentPlayer: 'X',
             value: '',
-            err: false,
-            players: []
+            background: '#fff',
+            colors: ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548", "#607d8b"]
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChangeColor = this.handleChangeColor.bind(this);
     };
     
     handleSubmit(e){
         e.preventDefault();
-
-        if(this.state.value !== '') {
-            let player = {
-                idPlayer: null,
-                playerIcon: null,
-                winCount: null,
-                name: ''
-            };
-
-            if(this.state.players.length === 0 || !this.state.players.find(item => item.name === this.state.value)){
-                player.idPlayer = this.state.idPlayer;
-                player.name = this.state.value;
-                player.playerIcon = this.state.currentPlayer;
         
-                this.props.selectPlayer(player);
-                this.setState({
-                    idPlayer: this.state.idPlayer + 1,
-                    currentPlayer: 'O',
-                    value: '',
-                    err: false,
-                    players: [...this.state.players, player],
-                });
-            }else {
-                this.setState({
-                    err: true
-                })
-            }
-        }else{
+        if(this.state.value !== '') {
+            getPlayerObj(
+                this.state.value,
+                this.props.moveDone, 
+                this.props.selectPlayer,
+                this.props.errFunc,
+                this.props.players,
+                this.state.background,
+                this.props.currentIcon)
+
             this.setState({
-                err: true
-            })
+                ...this.state,
+                value: '',
+                background: '#fff',
+            });
+        }else{
+            this.props.errFunc(true);
         }
     };
 
@@ -67,22 +55,16 @@ class InputPlayersName extends Component {
         });
     };
 
+    handleChangeColor(color){
+        this.setState({ background: color.hex });
+    };
+
     render(){
-        let currentPlayerComponent = null;
-        if(this.state.currentPlayer === 'X'){
-            currentPlayerComponent = <Figure
-                                        figureName={ 'fas fa-times' }
-                                        fontSize={ 1.2 }/>
-        }else {
-            currentPlayerComponent = <Figure
-                                        figureName={ 'far fa-circle' }
-                                        fontSize={ 1.1 }/>
-        }
-        let classNameForInput = `players-form__input ${!this.state.err ? null : 'errors'}`
+        let classNameForInput = `players-form__input ${this.props.err ? 'errors' : ''}`
         return(
             <form className='players-form' onSubmit={ this.handleSubmit }>
                 <label>
-                    <h3>Выберите имя игрока { currentPlayerComponent }</h3>
+                    <h3>Выберите имя игрока и цвет { CurentPlayerComponent(this.props.currentIcon) }</h3>
                     <input 
                         className={ classNameForInput }
                         placeholder='Enter name...' 
@@ -90,14 +72,30 @@ class InputPlayersName extends Component {
                         value={ this.state.value } 
                         onChange={ this.handleChange }/>
                 </label>
+                <CirclePicker
+                    color={ this.state.background }
+                    colors={ this.state.colors }
+                    onChangeComplete={ this.handleChangeColor }/>
                 <button className='players-form__btn' type='submit'>Выбрать!</button>
             </form>
         );
     };
 };
 
-const mapDispatchToProps = dispatch => (
-    {selectPlayer: player => dispatch(actions.selectPlayer(player))}
+const mapStateToProps = state => (
+    {   
+        players: state.reducerPlayers.players,
+        currentIcon: state.reducerMainGame.icon,
+        err: state.reducerPlayers.err
+    }
 );
 
-export default connect(null, mapDispatchToProps)(InputPlayersName);
+const mapDispatchToProps = dispatch => (
+    {
+        errFunc: err => dispatch(actions.err(err)),
+        selectPlayer: player => dispatch(actions.selectPlayer(player)),
+        moveDone: () => dispatch(actions.selectCell()),
+    }
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(InputPlayersName);

@@ -5,3 +5,4 @@ export const WIN = 'WIN';
 export const RESTART = 'RESTART';
 
 export const SELECT_PLAYER = 'SELECT_PLAYER';
+export const ERR = 'ERR';

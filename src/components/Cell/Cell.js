@@ -1,8 +1,10 @@
 import React from 'react';
 
-import Figure from '../Figure/Figure';
 import * as styled from '../../styled/style';
 import './style.css';
+
+import getColor from './util/getColor';
+import getCurrentIcon from './util/getCurrentIcon';
 
 import * as actions from '../../store/actions/actions';
 import { connect } from 'react-redux';
@@ -14,7 +16,9 @@ const Cell = props => {
         const currentCell = props.cell.find(item => item.id === elId)
         const updateCellArr = props.cell.map(item => {
             if(item.id === elId){
-                return {...item, content: props.icon}
+                return {...item, 
+                    content: props.icon,
+                    color: getColor(props.icon, props.players)}
             }else{
                 return {...item}
             }
@@ -25,26 +29,6 @@ const Cell = props => {
         };
     };
 
-    const getSizeIcon = sizeIcon => {
-        let fontSize = props.sizeCell * sizeIcon / styled.defaultCellSize;
-        return fontSize;
-    } 
-
-    let content = '';
-    if (props.content === 'X'){
-        content = <Figure 
-                        figureName={ "fas fa-times" } 
-                        fontSize={ getSizeIcon(10) }
-                        color={ props.color }/>;
-    }else if(props.content === 'O'){
-        content = <Figure 
-                        figureName={ "far fa-circle" }
-                        fontSize={ getSizeIcon(8) }
-                        color={ props.color }/>;
-    }else{
-        content = '';
-    };
-
     return (
         <div 
             className='cell'
@@ -52,7 +36,7 @@ const Cell = props => {
                     height: `${props.sizeCell}px`,
                     border: `${styled.borderCell}px solid black`} }
             data-id={props.dataId}
-            onClick={!props.win ? e => handleClick(e) : null}>{ content }</div>
+            onClick={!props.win ? e => handleClick(e) : null}>{ getCurrentIcon(props.content, props.sizeCell, 10, 8, props.color) }</div>
     );
 };
 
@@ -62,6 +46,7 @@ const mapStateToProps = state => (
         count: state.reducerMainGame.count,
         icon: state.reducerMainGame.icon,
         sizeCell: state.reducerMainGame.sizeCell,
+        players: state.reducerPlayers.players
     }
 );
 
